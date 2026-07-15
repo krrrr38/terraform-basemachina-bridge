@@ -175,7 +175,7 @@ resource "aws_instance" "bastion" {
   iam_instance_profile = aws_iam_instance_profile.bastion[0].name
 
   # User Data: PostgreSQLクライアントをインストール
-  user_data = base64encode(<<-EOF
+  user_data_base64 = base64encode(<<-EOF
     #!/bin/bash
     set -e
 
