@@ -47,7 +47,7 @@ resource "aws_ecs_task_definition" "bridge" {
   container_definitions = jsonencode([
     {
       name  = "bridge"
-      image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.name}.amazonaws.com/ecr-public/basemachina/bridge:${var.bridge_image_tag}"
+      image = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.region}.amazonaws.com/ecr-public/basemachina/bridge:${var.bridge_image_tag}"
 
       portMappings = [
         {
@@ -79,7 +79,7 @@ resource "aws_ecs_task_definition" "bridge" {
         logDriver = "awslogs"
         options = {
           "awslogs-group"         = aws_cloudwatch_log_group.bridge.name
-          "awslogs-region"        = data.aws_region.current.name
+          "awslogs-region"        = data.aws_region.current.region
           "awslogs-stream-prefix" = "bridge"
         }
       }

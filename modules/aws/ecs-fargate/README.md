@@ -62,7 +62,7 @@ module "bridge" {
 
 ### プロバイダー
 
-- AWS Provider: ~> 5.0
+- AWS Provider: ~> 6.0
 
 ### 前提条件
 
@@ -130,7 +130,7 @@ Public ECRのイメージをPrivate ECRにキャッシュする機能です。
 | Name | Version |
 |------|---------|
 | <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.5 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 5.0 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 6.0 |
 
 ## プロバイダー
 
@@ -138,7 +138,7 @@ Public ECRのイメージをPrivate ECRにキャッシュする機能です。
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 5.100.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | 6.54.0 |
 
 ## モジュール
 
