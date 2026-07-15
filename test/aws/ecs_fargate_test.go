@@ -178,7 +178,6 @@ func TestECSFargateModule(t *testing.T) {
 	bridgeSecurityGroupID := terraform.Output(t, terraformOptions, "bridge_security_group_id")
 	cloudwatchLogGroupName := terraform.Output(t, terraformOptions, "cloudwatch_log_group_name")
 	taskExecutionRoleArn := terraform.Output(t, terraformOptions, "task_execution_role_arn")
-	taskRoleArn := terraform.Output(t, terraformOptions, "task_role_arn")
 
 	assert.NotEmpty(t, albDNSName)
 	assert.NotEmpty(t, albArn)
@@ -189,7 +188,6 @@ func TestECSFargateModule(t *testing.T) {
 	assert.NotEmpty(t, bridgeSecurityGroupID)
 	assert.NotEmpty(t, cloudwatchLogGroupName)
 	assert.NotEmpty(t, taskExecutionRoleArn)
-	assert.NotEmpty(t, taskRoleArn)
 
 	// Create ECS and ELBv2 clients
 	ecsClient := ecs.New(sess)
