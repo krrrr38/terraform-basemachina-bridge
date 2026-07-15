@@ -33,6 +33,24 @@ variable "nat_gateway_id" {
   default     = null
 }
 
+variable "create_nat_gateway" {
+  description = "Whether to manage NAT Gateway resources (NAT Gateway, EIP and default routes for the private subnets). Set to false when the VPC already has NAT routing configured for the private subnets. When true with nat_gateway_id specified, the NAT Gateway itself is not created and only the default routes to the existing NAT Gateway are added."
+  type        = bool
+  default     = true
+}
+
+variable "create_vpc_endpoints" {
+  description = "Whether to create VPC endpoints (ECR API/DKR, S3, CloudWatch Logs). Set to false when the VPC already has these endpoints, because only one interface endpoint with private DNS enabled can exist per service in a VPC."
+  type        = bool
+  default     = true
+}
+
+variable "enable_ecr_pull_through_cache" {
+  description = "Whether to create an ECR pull through cache rule and pull the Bridge image through the private ECR registry. Set to false to pull the image directly from public.ecr.aws (requires internet access via NAT Gateway)."
+  type        = bool
+  default     = true
+}
+
 # ========================================
 # セキュリティ関連変数
 # ========================================

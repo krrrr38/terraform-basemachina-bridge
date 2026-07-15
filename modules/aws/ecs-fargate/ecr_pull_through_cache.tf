@@ -10,6 +10,13 @@
 # 2. ECRが自動的にpublic.ecr.aws/basemachina/bridge:latestからイメージを取得してキャッシュ
 # 3. AWSのマネージドインフラがPublic ECRから取得（ECSタスクではない）
 # 4. VPCエンドポイント経由でキャッシュされたイメージにアクセス
+#
+# var.enable_ecr_pull_through_cache = false の場合はpublic.ecr.awsから直接pullする
+
+locals {
+  # ECSタスク定義とoutputで使用するBridgeコンテナイメージURI
+  bridge_image_uri = var.enable_ecr_pull_through_cache ? "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.region}.amazonaws.com/ecr-public/basemachina/bridge:${var.bridge_image_tag}" : "public.ecr.aws/basemachina/bridge:${var.bridge_image_tag}"
+}
 
 # ========================================
 # Data Source: Caller Identity
@@ -24,6 +31,8 @@ data "aws_caller_identity" "current" {}
 # Public ECR用のプルスルーキャッシュルールを作成
 
 resource "aws_ecr_pull_through_cache_rule" "public_ecr" {
+  count = var.enable_ecr_pull_through_cache ? 1 : 0
+
   ecr_repository_prefix = "ecr-public"
   upstream_registry_url = "public.ecr.aws"
 

@@ -10,10 +10,12 @@
 #
 # 既存のNAT Gatewayを使用する場合は var.nat_gateway_id を指定
 # 指定しない場合は新しいNAT Gatewayが作成されます
+# VPC側で既にNAT経由のルーティングが構成済みの場合は var.create_nat_gateway = false を指定
+# （NAT Gateway・EIP・ルートを一切作成しなくなります）
 
 locals {
   # 既存のNAT Gatewayを使用するか、新規作成するかを判定
-  create_nat_gateway = var.nat_gateway_id == null
+  create_nat_gateway = var.create_nat_gateway && var.nat_gateway_id == null
   nat_gateway_id     = local.create_nat_gateway ? aws_nat_gateway.bridge[0].id : var.nat_gateway_id
 }
 
@@ -69,8 +71,9 @@ data "aws_route_table" "private_subnet" {
 }
 
 # 各プライベートサブネットのルートテーブルにNAT Gatewayへのデフォルトルートを追加
+# 既にデフォルトルートが存在する場合は var.create_nat_gateway = false を指定
 resource "aws_route" "private_nat_gateway" {
-  for_each = data.aws_route_table.private_subnet
+  for_each = { for k, v in data.aws_route_table.private_subnet : k => v if var.create_nat_gateway }
 
   route_table_id         = each.value.id
   destination_cidr_block = "0.0.0.0/0"

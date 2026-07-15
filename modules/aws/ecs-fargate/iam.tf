@@ -32,7 +32,10 @@ resource "aws_iam_role_policy_attachment" "task_execution" {
 
 # AmazonEC2ContainerRegistryReadOnlyマネージドポリシーのアタッチ
 # ECR (プライベート/パブリック) からイメージをpullするために必要
+# （プルスルーキャッシュを使わずpublic.ecr.awsから直接pullする場合は不要）
 resource "aws_iam_role_policy_attachment" "ecr_read_only" {
+  count = var.enable_ecr_pull_through_cache ? 1 : 0
+
   role       = aws_iam_role.task_execution.name
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
 }

@@ -80,28 +80,28 @@ output "task_execution_role_arn" {
 # ネットワーク診断やトラブルシューティングに使用
 
 output "vpc_endpoint_ecr_api_id" {
-  description = "ECR API VPCエンドポイントID"
-  value       = aws_vpc_endpoint.ecr_api.id
+  description = "ECR API VPCエンドポイントID（create_vpc_endpoints = falseの場合はnull）"
+  value       = one(aws_vpc_endpoint.ecr_api[*].id)
 }
 
 output "vpc_endpoint_ecr_dkr_id" {
-  description = "ECR Docker VPCエンドポイントID"
-  value       = aws_vpc_endpoint.ecr_dkr.id
+  description = "ECR Docker VPCエンドポイントID（create_vpc_endpoints = falseの場合はnull）"
+  value       = one(aws_vpc_endpoint.ecr_dkr[*].id)
 }
 
 output "vpc_endpoint_s3_id" {
-  description = "S3 VPCエンドポイントID"
-  value       = aws_vpc_endpoint.s3.id
+  description = "S3 VPCエンドポイントID（create_vpc_endpoints = falseの場合はnull）"
+  value       = one(aws_vpc_endpoint.s3[*].id)
 }
 
 output "vpc_endpoint_logs_id" {
-  description = "CloudWatch Logs VPCエンドポイントID"
-  value       = aws_vpc_endpoint.logs.id
+  description = "CloudWatch Logs VPCエンドポイントID（create_vpc_endpoints = falseの場合はnull）"
+  value       = one(aws_vpc_endpoint.logs[*].id)
 }
 
 output "vpc_endpoints_security_group_id" {
-  description = "VPCエンドポイント用セキュリティグループID"
-  value       = aws_security_group.vpc_endpoints.id
+  description = "VPCエンドポイント用セキュリティグループID（create_vpc_endpoints = falseの場合はnull）"
+  value       = one(aws_security_group.vpc_endpoints[*].id)
 }
 
 # ========================================
@@ -110,7 +110,7 @@ output "vpc_endpoints_security_group_id" {
 
 output "bridge_image_uri" {
   description = "使用されているBridgeコンテナイメージURI"
-  value       = "${data.aws_caller_identity.current.account_id}.dkr.ecr.${data.aws_region.current.region}.amazonaws.com/ecr-public/basemachina/bridge:${var.bridge_image_tag}"
+  value       = local.bridge_image_uri
 }
 
 # ========================================
