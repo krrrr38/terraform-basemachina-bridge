@@ -63,11 +63,6 @@ output "task_execution_role_arn" {
   value       = module.basemachina_bridge.task_execution_role_arn
 }
 
-output "task_role_arn" {
-  description = "タスクロールARN"
-  value       = module.basemachina_bridge.task_role_arn
-}
-
 # ========================================
 # VPC Endpoints関連の出力
 # ========================================
