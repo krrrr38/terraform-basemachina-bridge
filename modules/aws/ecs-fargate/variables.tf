@@ -60,6 +60,12 @@ variable "certificate_arn" {
   type        = string
 }
 
+variable "ssl_policy" {
+  description = "SSL security policy for the ALB HTTPS listener"
+  type        = string
+  default     = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
+}
+
 variable "additional_alb_ingress_cidrs" {
   description = "Additional CIDR blocks to allow HTTPS access to ALB (for testing or additional clients). BaseMachina IP (34.85.43.93/32) is always included."
   type        = list(string)
