@@ -63,6 +63,9 @@ module "basemachina_bridge" {
   # セキュリティ設定
   # ========================================
   additional_alb_ingress_cidrs = var.additional_alb_ingress_cidrs
+  enable_deletion_protection   = var.enable_deletion_protection
+  access_logs_bucket           = var.access_logs_bucket
+  access_logs_prefix           = var.access_logs_prefix
 
   # ========================================
   # Bridge環境変数

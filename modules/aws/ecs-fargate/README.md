@@ -192,6 +192,8 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_access_logs_bucket"></a> [access\_logs\_bucket](#input\_access\_logs\_bucket) | S3 bucket name for ALB access logs. When specified, access logs are enabled. The bucket policy must allow log delivery from the ELB service account (see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html). | `string` | `null` | no |
+| <a name="input_access_logs_prefix"></a> [access\_logs\_prefix](#input\_access\_logs\_prefix) | S3 key prefix for ALB access logs. Only used when access\_logs\_bucket is specified. | `string` | `null` | no |
 | <a name="input_additional_alb_ingress_cidrs"></a> [additional\_alb\_ingress\_cidrs](#input\_additional\_alb\_ingress\_cidrs) | Additional CIDR blocks to allow HTTPS access to ALB (for testing or additional clients). BaseMachina IP (34.85.43.93/32) is always included. | `list(string)` | `[]` | no |
 | <a name="input_bridge_image_tag"></a> [bridge\_image\_tag](#input\_bridge\_image\_tag) | Bridge container image tag (default: latest). Specify a specific version like 'v1.0.0' if needed. | `string` | `"latest"` | no |
 | <a name="input_certificate_arn"></a> [certificate\_arn](#input\_certificate\_arn) | ACM certificate ARN for HTTPS listener (required) | `string` | n/a | yes |
@@ -200,6 +202,7 @@ No modules.
 | <a name="input_create_vpc_endpoints"></a> [create\_vpc\_endpoints](#input\_create\_vpc\_endpoints) | Whether to create VPC endpoints (ECR API/DKR, S3, CloudWatch Logs). Set to false when the VPC already has these endpoints, because only one interface endpoint with private DNS enabled can exist per service in a VPC. | `bool` | `true` | no |
 | <a name="input_desired_count"></a> [desired\_count](#input\_desired\_count) | Number of ECS tasks to run | `number` | `1` | no |
 | <a name="input_domain_name"></a> [domain\_name](#input\_domain\_name) | Custom domain name for the Bridge (required). This domain will be used for ALB access. An A record alias to ALB will be created automatically in the specified Route53 Hosted Zone. | `string` | n/a | yes |
+| <a name="input_enable_deletion_protection"></a> [enable\_deletion\_protection](#input\_enable\_deletion\_protection) | Whether to enable deletion protection for the ALB. Set to false to allow deleting the ALB via terraform destroy. | `bool` | `true` | no |
 | <a name="input_enable_ecr_pull_through_cache"></a> [enable\_ecr\_pull\_through\_cache](#input\_enable\_ecr\_pull\_through\_cache) | Whether to create an ECR pull through cache rule and pull the Bridge image through the private ECR registry. Set to false to pull the image directly from public.ecr.aws (requires internet access via NAT Gateway). | `bool` | `true` | no |
 | <a name="input_fetch_interval"></a> [fetch\_interval](#input\_fetch\_interval) | Interval for fetching public keys (e.g., 1h, 30m) | `string` | `"1h"` | no |
 | <a name="input_fetch_timeout"></a> [fetch\_timeout](#input\_fetch\_timeout) | Timeout for fetching public keys (e.g., 10s, 30s) | `string` | `"10s"` | no |

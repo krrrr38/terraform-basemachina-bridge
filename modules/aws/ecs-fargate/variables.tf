@@ -66,6 +66,24 @@ variable "ssl_policy" {
   default     = "ELBSecurityPolicy-TLS13-1-2-Res-PQ-2025-09"
 }
 
+variable "enable_deletion_protection" {
+  description = "Whether to enable deletion protection for the ALB. Set to false to allow deleting the ALB via terraform destroy."
+  type        = bool
+  default     = true
+}
+
+variable "access_logs_bucket" {
+  description = "S3 bucket name for ALB access logs. When specified, access logs are enabled. The bucket policy must allow log delivery from the ELB service account (see https://docs.aws.amazon.com/elasticloadbalancing/latest/application/enable-access-logging.html)."
+  type        = string
+  default     = null
+}
+
+variable "access_logs_prefix" {
+  description = "S3 key prefix for ALB access logs. Only used when access_logs_bucket is specified."
+  type        = string
+  default     = null
+}
+
 variable "additional_alb_ingress_cidrs" {
   description = "Additional CIDR blocks to allow HTTPS access to ALB (for testing or additional clients). BaseMachina IP (34.85.43.93/32) is always included."
   type        = list(string)
