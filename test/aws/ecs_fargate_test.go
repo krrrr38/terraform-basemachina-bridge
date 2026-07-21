@@ -129,6 +129,9 @@ func TestECSFargateModule(t *testing.T) {
 	// For testing, allow all IPs (0.0.0.0/0) to access ALB
 	// Production deployments should restrict this to specific IPs
 	tfVars["additional_alb_ingress_cidrs"] = []string{"0.0.0.0/0"}
+
+	// Disable ALB deletion protection so terraform destroy can clean up after the test
+	tfVars["enable_deletion_protection"] = false
 	t.Log("Allowing ALB access from all IPs (0.0.0.0/0) for testing")
 	t.Logf("Bridge domain: %s", bridgeDomainName)
 	t.Logf("Route53 Zone ID: %s", route53ZoneID)

@@ -14,8 +14,17 @@ resource "aws_lb" "main" {
   security_groups    = [aws_security_group.alb.id]
   subnets            = var.public_subnet_ids
 
-  enable_deletion_protection = false
+  enable_deletion_protection = var.enable_deletion_protection
   drop_invalid_header_fields = true
+
+  dynamic "access_logs" {
+    for_each = var.access_logs_bucket != null ? [1] : []
+    content {
+      bucket  = var.access_logs_bucket
+      prefix  = var.access_logs_prefix
+      enabled = true
+    }
+  }
 
   tags = merge(
     var.tags,

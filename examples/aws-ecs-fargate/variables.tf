@@ -45,6 +45,24 @@ variable "additional_alb_ingress_cidrs" {
   default     = []
 }
 
+variable "enable_deletion_protection" {
+  description = "ALBの削除保護を有効にするか"
+  type        = bool
+  default     = true
+}
+
+variable "access_logs_bucket" {
+  description = "ALBアクセスログの保存先S3バケット名。指定するとアクセスログが有効になります。バケットにはELBサービスアカウントからの書き込みを許可するバケットポリシーが必要です。"
+  type        = string
+  default     = null
+}
+
+variable "access_logs_prefix" {
+  description = "ALBアクセスログのS3キープレフィックス（access_logs_bucket指定時のみ使用）"
+  type        = string
+  default     = null
+}
+
 # ========================================
 # Bridge環境変数
 # ========================================
